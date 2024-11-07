@@ -29,4 +29,5 @@
 ```shell
 <frontend> % npm start
 ```
+![Alt text](./frontend/public/Picture1.png)
 
