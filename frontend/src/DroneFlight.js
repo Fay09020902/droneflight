@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 function DroneFlight() {
-  const [droneflight, setDroneflight] = useState([]); // Initialize as an array
+  const [droneflight, setDroneflight] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [response, setResponse] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/droneflights')
+    fetch("http://127.0.0.1:5000/api/droneflights")
       .then((response) => response.json())
       .then((data) => {
-        setDroneflight(data); // Set the fetched data as an array
+        setDroneflight(data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching droneflight data:', error);
+        console.error("Error fetching droneflight data:", error);
         setLoading(false);
       });
   }, []);
@@ -23,7 +23,7 @@ function DroneFlight() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/query", {
+      const response = await fetch("http://127.0.0.1:5000/api/test", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -40,20 +40,18 @@ function DroneFlight() {
   };
 
   return (
-    <div className='queries'>
-      {/* Input Form for User Query */}
+    <div className="queries">
       <form onSubmit={handleSubmit}>
         <label htmlFor="Description">Enter your query</label>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder='What is the battery level of the drone during the last image?'
+          placeholder="What is the battery level of the drone during the last image?"
         />
         <button type="submit">Submit</button>
       </form>
 
-      {/* Display Query Response */}
       {response && (
         <div className="response">
           <h3>Response:</h3>
@@ -61,7 +59,6 @@ function DroneFlight() {
         </div>
       )}
 
-      {/* Display Drone Data Table */}
       {loading ? (
         <p>Loading drone data...</p>
       ) : (
@@ -73,7 +70,18 @@ function DroneFlight() {
               <th>Altitude (m)</th>
               <th>Battery Level (%)</th>
               <th>Speed (m/s)</th>
-              {/* Add more columns as needed */}
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Temperature (°C)</th>
+              <th>Signal Strength (dB)</th>
+              <th>Drone ID</th>
+              <th>Camera Angle (°)</th>
+              <th>Orientation</th>
+              <th>File Size (MB)</th>
+              <th>Image Resolution</th>
+              <th>Weather Conditions</th>
+              <th>Wind Speed (m/s)</th>
+              <th>Location Description</th>
             </tr>
           </thead>
           <tbody>
