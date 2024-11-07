@@ -44,10 +44,9 @@ subject_field_map = {
     "subject detection": "subject_detection"
 }
 
-@app.route("/api/droneflight")
+@app.route("/api/droneflights")
 def index():
-    droneflight = random.choice(droneflights)
-    return jsonify(droneflight)
+    return jsonify(droneflights)
 
 @app.route("/api/query", methods=["POST"])
 def process_query():

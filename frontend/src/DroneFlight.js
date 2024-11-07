@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
 function DroneFlight() {
-  const [droneflight, setDroneflight] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state
-  const [query, setQuery] = useState(''); // Store user query
-  const [response, setResponse] = useState(null); // Store response from API
+  const [droneflight, setDroneflight] = useState([]); // Initialize as an array
+  const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState('');
+  const [response, setResponse] = useState(null);
 
-  // useEffect(() => {
-  //   fetch('http://127.0.0.1:5000/api/droneflight')
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setDroneflight(data); // Set the fetched data
-  //       setLoading(false);    // Update loading state
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching droneflight data:', error);
-  //       setLoading(false); // Stop loading if there’s an error
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/api/droneflights')
+      .then((response) => response.json())
+      .then((data) => {
+        setDroneflight(data); // Set the fetched data as an array
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching droneflight data:', error);
+        setLoading(false);
+      });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,20 +60,35 @@ function DroneFlight() {
           <p>{response}</p>
         </div>
       )}
-{/*
-      Display Drone Data
+
+      {/* Display Drone Data Table */}
       {loading ? (
         <p>Loading drone data...</p>
       ) : (
-        droneflight && (
-          <div>
-            <h1>Drone Flight Details</h1>
-            <p>Image ID: {droneflight.image_id}</p>
-            <p>Timestamp: {droneflight.timestamp}</p>
-            <p>Altitude: {droneflight.altitude_m} meters</p>
-          </div>
-        )
-      )} */}
+        <table>
+          <thead>
+            <tr>
+              <th>Image ID</th>
+              <th>Timestamp</th>
+              <th>Altitude (m)</th>
+              <th>Battery Level (%)</th>
+              <th>Speed (m/s)</th>
+              {/* Add more columns as needed */}
+            </tr>
+          </thead>
+          <tbody>
+            {droneflight.map((flight) => (
+              <tr key={flight.image_id}>
+                <td>{flight.image_id}</td>
+                <td>{flight.timestamp}</td>
+                <td>{flight.altitude_m}</td>
+                <td>{flight.battery_level_pct}</td>
+                <td>{flight.drone_speed_mps}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
