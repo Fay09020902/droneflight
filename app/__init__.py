@@ -5,8 +5,8 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from openai import OpenAI
 
-from config import Config
-from droneflights import droneflights
+from .config import Config
+from .droneflights import droneflights
 
 # Initialize Flask app
 app = Flask(__name__, static_folder='../react-drone/build',
@@ -27,6 +27,8 @@ def ordinal_to_number(ordinal_word):
 
 # Mapping of subject keywords to fields in the droneflight records
 subject_field_map = {
+    "image id": "image_id",
+    "timestamp": "timestamp",
     "altitude": "altitude_m",
     "battery": "battery_level_pct",
     "speed": "drone_speed_mps",
@@ -43,7 +45,11 @@ subject_field_map = {
     "file size": "file_size_mb",
     "gps accuracy": "gps_accuracy_m",
     "gimbal mode": "gimbal_mode",
-    "subject detection": "subject_detection"
+    "subject detection": "subject_detection",
+    "heading degree": "heading_deg",
+    "file name": "file_name",
+    "image format": "image_format",
+    "drone speed": "drone_image"
 }
 
 
